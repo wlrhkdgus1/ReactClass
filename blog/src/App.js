@@ -11,19 +11,14 @@ function App() {
   let [modal,modal변경] = useState(false);
   let [누른제목, 누른제목변경] = useState(0);
  
-  let posts = '강남 고기 맛집';
-
-  function 제목바꾸기(){
-    var newArray = [...글제목];
-    newArray[0] = '여자코트 추천';
-    글제목변경( newArray );
-  }
+  let [입력값, 입력값변경] = useState('');
 
   return (
     <div className="App">
       <div className="black-nav">
         <div>개발 Blog</div>
       </div>
+
          {
           글제목.map(function(a , i){
             return (
@@ -41,7 +36,20 @@ function App() {
         <button onClick={ ()=>{ 누른제목변경(1) } }>버튼2</button>
         <button onClick={ ()=>{ 누른제목변경(2) } }>버튼3</button> */}
 
-        <button onClick={ ()=> { modal변경(!modal)}}> 열고닫는버튼</button>
+
+        <div className="publish">
+          <input onChange={ (e)=>{ 입력값변경(e.target.value ) } }/>
+          <button onClick={ ()=> { 
+            var arrayCopy = [...글제목];
+            arrayCopy.unshift(입력값);
+            글제목변경( arrayCopy );
+          } }>저장</button>
+        </div>
+
+
+
+
+        <button onClick={ ()=> { modal변경(!modal)}}>열고닫는버튼</button>
       {
         modal === true
         ? <Modal 글제목={글제목} 누른제목={누른제목} ></Modal>
@@ -61,7 +69,7 @@ function Modal(props){
   </div>
   )
 }
-
+  
 
 
 export default App;
