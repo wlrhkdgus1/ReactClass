@@ -4,13 +4,13 @@ import './App.css';
 
 function App() {
 
-  let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동 맛집', '수원 초밥 맛집'])
+  let [글제목, 글제목변경] = useState(['남자 코트 추천', '강남 우동 맛집', '수원 초밥 맛집']);
   let [따봉, 따봉변경] = useState(0,0,0);
 
-  let [modal, modalC] = useState(false);
+  let [modal, modalC] = useState(true);
   let [누른제목 , 누른제목변경] = useState(0);
 
-  
+  let[입력값, 입력값변경] = useState('');
 
 
   let posts = '강남 고기 맛집';
@@ -31,7 +31,7 @@ function App() {
       {
         글제목.map(function(a,i){
           return(
-            <div className='list'>
+            <div className='list' key={i}>
               <h3 onClick={ ()=>{누른제목변경(i)} }> {a} <span onClick={()=>{따봉변경(따봉+1)}}>❤{따봉}</span></h3>
               <p>10월 7일 발행</p>
               <hr/>
@@ -41,11 +41,16 @@ function App() {
         
       }
 
-      {/* <button onClick={ ()=>{누른제목변경(0)} }>버튼1</button>
-      <button onClick={ ()=>{누른제목변경(1)} }>버튼2</button>
-      <button onClick={ ()=>{누른제목변경(2)} }>버튼3</button> */}
+      <div className="publish">
+        <input onChange={ (e) => {입력값변경(e.target.value) } }/>
+        <button onClick={ () => {
+          var arrayCopy = [...글제목]
+          arrayCopy.unshift(입력값);
+          글제목변경(arrayCopy);
+        } }>저장</button>
+      </div>
 
-      <button onClick={()=>{ modalC(!modal)}}>버튼</button>
+  
       {
         modal === true
         ? <Modal 글제목={글제목} 누른제목={누른제목}></Modal>
