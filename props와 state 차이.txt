@@ -1,0 +1,141 @@
+Reference
+누구든지 하는 리액트: 초심자를 위한 react 핵심 강좌 인프런 강의
+
+Props, State
+데이터를 다룰 때 사용되는 개념이다.
+
+Props
+부모 컴포넌트가 자식 컴포넌트한테 전달하는 데이터로, (자식 입장에서)읽기 전용이다.
+
+<Child value="value" />
+Class Component
+// MyName.js
+import React, { Component } from 'react';
+
+class MyName extends Component {
+  // 최신
+  static defaultProps = {
+    name: '기본이름'
+  };
+
+  render() {
+    return (
+      <div>
+        안녕하세요! 제 이름은 <b>{this.props.name}</b>입니다.
+      </div>
+    );
+  }
+}
+
+MyName.defaultProps = {
+  name: 'velopert'
+};
+
+export default MyName;
+import React, { Component } from 'react';
+import MyName from './MyName';
+
+class App extends Component {
+  render() {
+    return <MyName />;
+  }
+}
+
+export default App;
+Functional Component
+import React, { Component } from 'react';
+
+const MyName = ({ name }) => {
+  return <div>안녕하세요! 제 이름은 {name} 입니다.</div>;
+};
+
+MyName.defaultProps = {
+  name: 'snaag'
+};
+
+export default MyName;
+import React, { Component } from 'react';
+import MyName from './MyName';
+
+class App extends Component {
+  render() {
+    return <MyName name="jj" />;
+  }
+}
+
+export default App;
+초기 마운트 속도가 빠름
+불필요한 기능이 없음
+State
+자신이 들고 있는 값을 말한다. (읽기 전용인 Props와 비교해보자면, 쓰기 전용이라고 볼 수 있겠다)
+
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  state = {
+    number: 0
+  };
+
+  handleIncrease = () => {
+    this.setState({
+      number: this.state.number + 1
+    });
+  };
+
+  handleDecrease = () => {
+    this.setState({
+      number: this.state.number - 1
+    });
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>카운터</h1>
+        <div>값: {this.state.number}</div>
+        <button onClick={this.handleIncrease}>+</button>
+        <button onClick={this.handleDecrease}>-</button>
+      </div>
+    );
+  }
+}
+
+export default Counter;
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  state = {
+    number: 0
+  };
+
+  constructor(props) {
+    super(props);
+    this.handleIncrease = this.handleIncrease.bind(this);
+    this.handleDecrease = this.handleDecrease.bind(this);
+  }
+
+  handleIncrease() {
+    this.setState({
+      number: this.state.number + 1
+    });
+  }
+
+  handleDecrease() {
+    this.setState({
+      number: this.state.number - 1
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h1>카운터</h1>
+        <div>값: {this.state.number}</div>
+        <button onClick={this.handleIncrease}>+</button>
+        <button onClick={this.handleDecrease}>-</button>
+      </div>
+    );
+  }
+}
+
+export default Counter;
